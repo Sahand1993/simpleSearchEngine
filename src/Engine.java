@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +6,12 @@ import java.util.Map;
 public class Engine {
     private Index index;
     private Searcher searcher;
+
+    /**
+     * Mapping docId to docName and vice-versa.
+     */
     private Map<Integer, String> docId2Name = new HashMap<>();
     private Map<String, Integer> docName2Id = new HashMap<>();
-    /**
-     * Must be unique
-     */
-    int docsSeen = 0;
 
     /**
      *
@@ -20,30 +19,33 @@ public class Engine {
      */
     public Engine(String path2Docs) throws IOException {
         File folder = new File(path2Docs);
-        FileReader fileReader;
-        int docId;
-        String name;
         index = new Index();
-
-        tokenizeFiles(folder);
-        searcher = new Searcher(index, this);
+        indexFiles(folder);
+        searcher = new Searcher(index);
     }
 
-    private void tokenizeFiles(File folder) throws IOException {
+    /**
+     * Adds all files in folder to the index.
+     * @param folder The folder containing files to be indexed
+     * @throws IOException
+     */
+    private void indexFiles(File folder) throws IOException {
+        FileReader fileReader;
         String name;
         int docId;
-        FileReader fileReader;
+        // Tokenize and index one document at a time
         for(File file : folder.listFiles()){
             // Have we seen this file before?
             name = file.getName();
+            System.err.println(name);
             if(docName2Id.containsKey(name)){
                 docId = docName2Id.get(name);
             }else{
-                docId = docsSeen++;
+                docId = docName2Id.size();
                 docName2Id.put(name, docId);
                 docId2Name.put(docId, name);
             }
-            // Tokenize and index 1 doc at a time
+            // Tokenize and insert into index
             fileReader = new FileReader(file);
             Tokenizer tokenizer = new Tokenizer(fileReader);
             index.insert(tokenizer, docId);

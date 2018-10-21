@@ -1,29 +1,42 @@
-public class PostingsEntry implements Comparable<PostingsEntry> {
+/**
+ * Represents a document containing a particular token.
+ * Compares itself to other instances according to score.
+ */
+class PostingsEntry implements Comparable<PostingsEntry> {
+    /**
+     * The number of times the token was found in the document.
+     */
     private int wordFreq;
+
     private int docId;
+
+    /**
+     * tf-idf score for document.
+     */
     private double score;
-    public PostingsEntry(int wordFreq, int docId){
+
+    PostingsEntry(int wordFreq, int docId){
         this.wordFreq = wordFreq;
         this.docId = docId;
     }
 
-    public void incrementWordFreq() {
+    void incrementWordFreq() {
         wordFreq++;
     }
 
-    public int getWordFreq() {
+    int getWordFreq() {
         return wordFreq;
     }
 
-    public double getScore() {
+    double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    void setScore(double score) {
         this.score = score;
     }
 
-    public int getDocId() {
+    int getDocId() {
         return docId;
     }
 

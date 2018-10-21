@@ -1,9 +1,11 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class PostingsList extends ArrayList<PostingsEntry> {
-    public void add(int docId) {
-        // Make sure that when a document contains the same word more than once, the wordFreq of the relevant postingsEntry is incremented
+class PostingsList extends ArrayList<PostingsEntry> {
+    /**
+     * Add document to list.
+     * @param docId The document to add.
+     */
+    void add(int docId) {
         int idx = indexOf(docId);
         if (idx > -1) {
             // We've seen this word in document before.
@@ -14,7 +16,12 @@ public class PostingsList extends ArrayList<PostingsEntry> {
         }
     }
 
-    public int indexOf(int docId) {
+    /**
+     * Returns index of a document in the list.
+     * @param docId The document to return index of.
+     * @return Index of the document, or -1 if not in list.
+     */
+    private int indexOf(int docId) {
         int i = 0;
         while (i < this.size()) {
             if (this.get(i).getDocId() == docId) {
