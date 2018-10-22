@@ -19,10 +19,9 @@ class Searcher {
      */
     List<PostingsEntry> search(String query) {
         List<PostingsEntry> indexHits = index.getDocuments(query);
-        double score;
         if(indexHits != null) {
             for (PostingsEntry posting : indexHits) {
-                score = tfIdf(posting, indexHits.size());
+                double score = tfIdf(posting, indexHits.size());
                 posting.setScore(score);
             }
             indexHits.sort(Collections.reverseOrder());
