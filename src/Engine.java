@@ -30,14 +30,12 @@ public class Engine {
      * @throws IOException
      */
     private void indexFiles(File folder) throws IOException {
-        FileReader fileReader;
-        String name;
-        int docId;
         // Tokenize and index one document at a time
         for(File file : folder.listFiles()){
             // Have we seen this file before?
-            name = file.getName();
+            String name = file.getName();
             System.err.println(name);
+            int docId;
             if(docName2Id.containsKey(name)){
                 docId = docName2Id.get(name);
             }else{
@@ -46,7 +44,7 @@ public class Engine {
                 docId2Name.put(docId, name);
             }
             // Tokenize and insert into index
-            fileReader = new FileReader(file);
+            FileReader fileReader = new FileReader(file);
             Tokenizer tokenizer = new Tokenizer(fileReader);
             index.insert(tokenizer, docId);
         }
