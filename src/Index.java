@@ -40,9 +40,8 @@ class Index {
      */
     void insert(Tokenizer tokenizer, int docId) {
         docLengths.put(docId, tokenizer.initialSize());
-        String token;
         while(tokenizer.hasMoreTokens()){
-            token = tokenizer.removeToken();
+            String token = tokenizer.removeToken();
             insert(token, docId);
         }
     }
