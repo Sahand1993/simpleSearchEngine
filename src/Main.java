@@ -17,10 +17,9 @@ public class Main {
             System.exit(0);
         }
         Scanner sc = new Scanner(System.in);
-        String userIn;
         while (true){
             System.out.println("Enter query word...");
-            userIn = sc.next();
+            String userIn = sc.next();
 
             if(userIn.equals("q")){
                 System.out.println("Quitting...");
